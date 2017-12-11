@@ -14,7 +14,7 @@ var ViewModel = function() {
   }, this);
   this.imgSrc = ko.observable('img/434164568_fea0ad4013_z.jpg');
   this.imgAttribution = ko.observable('https://www.flickr.com/photos/big');
-  this.catNicknames = ko.observableArray([{ nick: 'Zowie' }, {nick: 'Zoey'}, {nick: 'Zoie'}]);
+  this.catNicknames = ko.observableArray(['Zowie', 'Zoey', 'Zoie']);
   this.incrementCounter = function() {
     this.clickCount(this.clickCount() + 1);
   };
