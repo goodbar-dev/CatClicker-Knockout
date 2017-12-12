@@ -1,6 +1,25 @@
-var Cat = function() {
-  this.clickCount = ko.observable(0);
-  this.name = ko.observable('Tabby');
+var initialCats = [
+{
+  clickCount: 0,
+  name: 'Tabby',
+  imgSrc: 'img/434164568_fea0ad4013_z.jpg',
+  imgAttribution: 'https://www.flickr.com/photos/bigtallguy/434164568',
+  catNicknames: ['Zowie', 'Zoey', 'Zoie']
+},
+{
+  clickCount: 0,
+  name: 'Blue',
+  imgSrc: 'img/434164568_fea0ad4013_z.jpg',
+  imgAttribution: 'https://www.flickr.com/photos/bigtallguy/434164568',
+  catNicknames: ['Bowzer', 'Billy', 'Bobby']
+}];
+
+var Cat = function(data) {
+  this.clickCount = ko.observable(data.clickCount);
+  this.name = ko.observable(data.name);
+  this.imgSrc = ko.observable(data.imgSrc);
+  this.imgAttribution = ko.observable(data.imgAttribution);
+  this.catNicknames = ko.observable(data.catNicknames);
   this.level = ko.computed(function() {
     if (this.clickCount() <= 5) {
         return "Baby";
@@ -12,16 +31,24 @@ var Cat = function() {
         return "Adult"
     }
   }, this);
-  this.imgSrc = ko.observable('img/434164568_fea0ad4013_z.jpg');
-  this.imgAttribution = ko.observable('https://www.flickr.com/photos/big');
-  this.catNicknames = ko.observableArray(['Zowie', 'Zoey', 'Zoie']);
 }
 
 var ViewModel = function() {
-  this.currentCat = ko.observable(new Cat());
+  var self = this;
+  this.catList = ko.observableArray([]);
+
+  initialCats.forEach(function(catItem) {
+    self.catList.push(new Cat(catItem));
+  })
+
+  this.currentCat = ko.observable(this.catList()[0]);
 
   this.incrementCounter = function() {
-    this.clickCount(this.clickCount() + 1);
+    self.currentCat().clickCount(self.currentCat().clickCount() + 1);
+  };
+
+  this.selectCat = function(cat) {
+    self.currentCat(cat);
   };
 }
 
